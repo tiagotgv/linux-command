@@ -1,28 +1,28 @@
 apt-sortpkgs
 ===
 
-Debian Linux下对软件包索引文件进行排序的工具
+Debian Linux下對軟體包索引檔案進行排序的工具
 
-## 补充说明
+## 補充說明
 
-**apt-sortpkgs命令** 是Debian Linux下对软件包索引文件进行排序的简单工具。
+**apt-sortpkgs命令** 是Debian Linux下對軟體包索引檔案進行排序的簡單工具。
 
-### 语法  
-
-```
-apt-sortpkgs(选项)(参数)
-```
-
-### 选项  
+### 語法
 
 ```
--s：使用源索引字段排序；
--h：显示帮助信息。
+apt-sortpkgs(選項)(參數)
 ```
 
-### 参数  
+### 選項
 
-文件：指定要排序的包含debian包信息的索引文件。
+```
+-s：使用源索引欄位排序；
+-h：顯示幫助資訊。
+```
+
+### 參數
+
+檔案：指定要排序的包含debian包資訊的索引檔案。
 
 
-<!-- Linux命令行搜索引擎：https://jaywcjlove.github.io/linux-command/ -->
+<!-- Linux命令列搜尋引擎：https://jaywcjlove.github.io/linux-command/ -->

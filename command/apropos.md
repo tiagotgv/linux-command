@@ -1,44 +1,44 @@
 apropos
 ===
 
-在 whatis 数据库中查找字符串
+在 whatis 資料庫中查詢字元串
 
-## 补充说明
+## 補充說明
 
-**apropos命令** 在一些特定的包含系统命令的简短描述的数据库文件里查找关键字，然后把结果送到标准输出。 
+**apropos命令** 在一些特定的包含系統命令的簡短描述的資料庫檔案裡查詢關鍵字，然後把結果送到標準輸出。 
 
-如果你不知道完成某个特定任务所需要命令的名称，可以使用一个关键字通过Linux apropos实用程序来搜索它。该实用程序可以搜索关键字并且显示所有包含匹配项的man页面的简短描述。另外，使用man实用程序和-k（关键字）选项，可以得到和用Linux apropos实用程序相同的结果（实际上是相同的命令）。
+如果你不知道完成某個特定任務所需要命令的名稱，可以使用一個關鍵字通過Linux apropos實用程式來搜尋它。該實用程式可以搜尋關鍵字並且顯示所有包含匹配項的man頁面的簡短描述。另外，使用man實用程式和-k（關鍵字）選項，可以得到和用Linux apropos實用程式相同的結果（實際上是相同的命令）。
 
-### 语法  
+### 語法
 
 ```
 apropos [-dalhvV] -e|-[w|-r] [-s section] [-m system[,...]] [-M path] [-L locale] -C [file] keyword ...
 ```
 
-### 选项  
+### 選項
 
 ```
--d, --debug：输出调试信息。
--v, --verbose：输出详细的警告信息。
--r, -- regex：将每个keyword作为正则表达式解释。这是默认行为。每个keyword将匹配手册页和描述。
--w, --wildcard：将每个keyword作为shell样式的通配符解释。
--e, --exact：每个keyword将精确匹配手册页名字和描述。
--a, --and：只显示匹配所有keyword的手册页和描述。默认显示匹配任何keyword的项。
--l, --long：不根据终端宽度缩减输出。
--s section, --section section：只查找指定的手册section。
--m system[,...], --systems=system[,...]：用于查找其它操作系统的手册页。
--M path, --manpath=path：指定从其它以冒号分隔的手册页层次查找。默认使用$MANPATH环境变量。这个选项覆盖$MANPATH的内容。
--L locale, --locale=locale：apropos调用C函数setlocale来得到当前本地化信息，包括$LC_MESSAGE和$LANG。使用该选项提供一个locale字符串来临时更改本地化信息。
--C file, --config-file=file：使用这个用户配置文件而不是默认的~/.manpath。
--h, --help：打印帮助信息并退出。
--V, --version：打印版本信息并退出。
+-d, --debug：輸出偵錯資訊。
+-v, --verbose：輸出詳細的警告資訊。
+-r, -- regex：將每個keyword作為正規表示式解釋。這是預設行為。每個keyword將匹配手冊頁和描述。
+-w, --wildcard：將每個keyword作為shell樣式的通配符解釋。
+-e, --exact：每個keyword將精確匹配手冊頁名字和描述。
+-a, --and：只顯示匹配所有keyword的手冊頁和描述。預設顯示匹配任何keyword的項。
+-l, --long：不根據終端寬度縮減輸出。
+-s section, --section section：只查詢指定的手冊section。
+-m system[,...], --systems=system[,...]：用於查詢其它作業系統的手冊頁。
+-M path, --manpath=path：指定從其它以冒號分隔的手冊頁層次查詢。預設使用$MANPATH環境變數。這個選項覆蓋$MANPATH的內容。
+-L locale, --locale=locale：apropos呼叫C函數setlocale來得到當前本地化資訊，包括$LC_MESSAGE和$LANG。使用該選項提供一個locale字元串來臨時更改本地化資訊。
+-C file, --config-file=file：使用這個使用者配置檔案而不是預設的~/.manpath。
+-h, --help：列印幫助資訊並退出。
+-V, --version：列印版本資訊並退出。
 ```
 
-### 返回值  
+### 返回值
 
-返回0表示成功，1表示用法、语法或配置文件错误，2表示操作错误，16表示没有找到匹配的内容。
+返回0表示成功，1表示用法、語法或配置檔案錯誤，2表示操作錯誤，16表示沒有找到匹配的內容。
 
-### 实例  
+### 例項
 
 ```
 [root@localhost ~]# man -k who
@@ -64,11 +64,11 @@ who                  (1)  - show who is logged on
 whoami               (1)  - print effective userid
 ```
 
-查找手册页名字和描述中包含emacs和vi的手册页：
+查詢手冊頁名字和描述中包含emacs和vi的手冊頁：
 
 ```
 apropos -a emacs vi
 ```
 
 
-<!-- Linux命令行搜索引擎：https://jaywcjlove.github.io/linux-command/ -->
+<!-- Linux命令列搜尋引擎：https://jaywcjlove.github.io/linux-command/ -->

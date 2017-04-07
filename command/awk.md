@@ -1,80 +1,80 @@
 awk
 ===
 
-文本和数据进行处理的编程语言
+文字和資料進行處理的程式語言
 
-## 补充说明
+## 補充說明
 
-**awk** 是一种编程语言，用于在linux/unix下对文本和数据进行处理。数据可以来自标准输入(stdin)、一个或多个文件，或其它命令的输出。它支持用户自定义函数和动态正则表达式等先进功能，是linux/unix下的一个强大编程工具。它在命令行中使用，但更多是作为脚本来使用。awk有很多内建的功能，比如数组、函数等，这是它和C语言的相同之处，灵活性是awk最大的优势。
+**awk** 是一種程式語言，用於在linux/unix下對文字和資料進行處理。資料可以來自標準輸入(stdin)、一個或多個檔案，或其它命令的輸出。它支援使用者自定義函數和動態正規表示式等先進功能，是linux/unix下的一個強大程式設計工具。它在命令列中使用，但更多是作為指令碼來使用。awk有很多內建的功能，比如陣列、函數等，這是它和C語言的相同之處，靈活性是awk最大的優勢。
 
-## awk命令格式和选项  
+## awk命令格式和選項
 
- **语法形式** 
+ **語法形式**
 
 ```
 awk [options] 'script' var=value file(s)
 awk [options] -f scriptfile var=value file(s)
 ```
 
- **常用命令选项** 
+ **常用命令選項**
 
-*    **-F fs   ** fs指定输入分隔符，fs可以是字符串或正则表达式，如-F:
-*    **-v var=value   ** 赋值一个用户定义变量，将外部变量传递给awk
-*    **-f scripfile  ** 从脚本文件中读取awk命令
-*    **-m[fr] val   ** 对val值设置内在限制，-mf选项限制分配给val的最大块数目；-mr选项限制记录的最大数目。这两个功能是Bell实验室版awk的扩展功能，在标准awk中不适用。
+*    **-F fs   ** fs指定輸入分隔符，fs可以是字元串或正規表示式，如-F:
+*    **-v var=value   ** 賦值一個使用者定義變數，將外部變數傳遞給awk
+*    **-f scripfile  ** 從指令碼檔案中讀取awk命令
+*    **-m[fr] val   ** 對val值設定內在限制，-mf選項限制分配給val的最大塊數目；-mr選項限制記錄的最大數目。這兩個功能是Bell實驗室版awk的擴充套件功能，在標準awk中不適用。
 
-## awk模式和操作  
+## awk模式和操作
 
-awk脚本是由模式和操作组成的。
+awk指令碼是由模式和操作組成的。
 
-### 模式  
+### 模式
 
-模式可以是以下任意一个：
+模式可以是以下任意一個：
 
-*   /正则表达式/：使用通配符的扩展集。
-*   关系表达式：使用运算符进行操作，可以是字符串或数字的比较测试。
-*   模式匹配表达式：用运算符`~`（匹配）和`~!`（不匹配）。
-*   BEGIN语句块、pattern语句块、END语句块：参见awk的工作原理
+*   /正規表示式/：使用通配符的擴充套件集。
+*   關係表示式：使用運算符進行操作，可以是字元串或數字的比較測試。
+*   模式匹配表示式：用運算符`~`（匹配）和`~!`（不匹配）。
+*   BEGIN語句塊、pattern語句塊、END語句塊：參見awk的工作原理
 
-### 操作  
+### 操作
 
-操作由一个或多个命令、函数、表达式组成，之间由换行符或分号隔开，并位于大括号内，主要部分是：
+操作由一個或多個命令、函數、表示式組成，之間由換行符或分號隔開，並位於大括號內，主要部分是：
 
-*   变量或数组赋值
-*   输出命令
-*   内置函数
-*   控制流语句
+*   變數或陣列賦值
+*   輸出命令
+*   內建函數
+*   控制流語句
 
-## awk脚本基本结构  
+## awk指令碼基本結構
 
 ```
 awk 'BEGIN{ print "start" } pattern{ commands } END{ print "end" }' file
 ```
 
-一个awk脚本通常由：BEGIN语句块、能够使用模式匹配的通用语句块、END语句块3部分组成，这三个部分是可选的。任意一个部分都可以不出现在脚本中，脚本通常是被 **单引号** 或 **双引号** 中，例如：
+一個awk指令碼通常由：BEGIN語句塊、能夠使用模式匹配的通用語句塊、END語句塊3部分組成，這三個部分是可選的。任意一個部分都可以不出現在指令碼中，指令碼通常是被 **單引號** 或 **雙引號** 中，例如：
 
 ```
 awk 'BEGIN{ i=0 } { i++ } END{ print i }' filename
 awk "BEGIN{ i=0 } { i++ } END{ print i }" filename
 ```
 
-### awk的工作原理  
+### awk的工作原理
 
 ```
 awk 'BEGIN{ commands } pattern{ commands } END{ commands }'
 ```
 
-*   第一步：执行`BEGIN{ commands }`语句块中的语句；
-*   第二步：从文件或标准输入(stdin)读取一行，然后执行`pattern{ commands }`语句块，它逐行扫描文件，从第一行到最后一行重复这个过程，直到文件全部被读取完毕。
-*   第三步：当读至输入流末尾时，执行`END{ commands }`语句块。
+*   第一步：執行`BEGIN{ commands }`語句塊中的語句；
+*   第二步：從檔案或標準輸入(stdin)讀取一行，然後執行`pattern{ commands }`語句塊，它逐行掃描檔案，從第一行到最後一行重複這個過程，直到檔案全部被讀取完畢。
+*   第三步：當讀至輸入流末尾時，執行`END{ commands }`語句塊。
 
- **BEGIN语句块** 在awk开始从输入流中读取行 **之前** 被执行，这是一个可选的语句块，比如变量初始化、打印输出表格的表头等语句通常可以写在BEGIN语句块中。
+ **BEGIN語句塊** 在awk開始從輸入流中讀取行 **之前** 被執行，這是一個可選的語句塊，比如變數初始化、列印輸出表格的表頭等語句通常可以寫在BEGIN語句塊中。
 
- **END语句块** 在awk从输入流中读取完所有的行 **之后** 即被执行，比如打印所有行的分析结果这类信息汇总都是在END语句块中完成，它也是一个可选语句块。
+ **END語句塊** 在awk從輸入流中讀取完所有的行 **之後** 即被執行，比如列印所有行的分析結果這類資訊彙總都是在END語句塊中完成，它也是一個可選語句塊。
 
- **pattern语句块** 中的通用命令是最重要的部分，它也是可选的。如果没有提供pattern语句块，则默认执行`{ print }`，即打印每一个读取到的行，awk读取的每一行都会执行该语句块。
+ **pattern語句塊** 中的通用命令是最重要的部分，它也是可選的。如果沒有提供pattern語句塊，則預設執行`{ print }`，即列印每一個讀取到的行，awk讀取的每一行都會執行該語句塊。
 
- **示例** 
+ **示例**
 
 ```
 echo -e "A line 1nA line 2" | awk 'BEGIN{ print "Start" } { print } END{ print "End" }'
@@ -84,61 +84,61 @@ A line 2
 End
 ```
 
-当使用不带参数的`print`时，它就打印当前行，当`print`的参数是以逗号进行分隔时，打印时则以空格作为定界符。在awk的print语句块中双引号是被当作拼接符使用，例如：
+當使用不帶參數的`print`時，它就列印當前行，當`print`的參數是以逗號進行分隔時，列印時則以空格作為定界符。在awk的print語句塊中雙引號是被當作拼接符使用，例如：
 
 ```
-echo | awk '{ var1="v1"; var2="v2"; var3="v3"; print var1,var2,var3; }' 
+echo | awk '{ var1="v1"; var2="v2"; var3="v3"; print var1,var2,var3; }'
 v1 v2 v3
 ```
 
-双引号拼接使用：
+雙引號拼接使用：
 
 ```
 echo | awk '{ var1="v1"; var2="v2"; var3="v3"; print var1"="var2"="var3; }'
 v1=v2=v3
 ```
 
-{ }类似一个循环体，会对文件中的每一行进行迭代，通常变量初始化语句（如：i=0）以及打印文件头部的语句放入BEGIN语句块中，将打印的结果等语句放在END语句块中。
+{ }類似一個迴圈體，會對檔案中的每一行進行迭代，通常變數初始化語句（如：i=0）以及列印檔案頭部的語句放入BEGIN語句塊中，將列印的結果等語句放在END語句塊中。
 
-## awk内置变量（预定义变量）  
+## awk內建變數（預定義變數）
 
-说明：[A][N][P][G]表示第一个支持变量的工具，[A]=awk、[N]=nawk、[P]=POSIXawk、[G]=gawk
-
-```
- **$n**  当前记录的第n个字段，比如n为1表示第一个字段，n为2表示第二个字段。 
- **$0**  这个变量包含执行过程中当前行的文本内容。
-[N]  **ARGC**  命令行参数的数目。
-[G]  **ARGIND**  命令行中当前文件的位置（从0开始算）。
-[N]  **ARGV**  包含命令行参数的数组。
-[G]  **CONVFMT**  数字转换格式（默认值为%.6g）。
-[P]  **ENVIRON**  环境变量关联数组。
-[N]  **ERRNO**  最后一个系统错误的描述。
-[G]  **FIELDWIDTHS**  字段宽度列表（用空格键分隔）。
-[A]  **FILENAME**  当前输入文件的名。
-[P]  **FNR**  同NR，但相对于当前文件。
-[A]  **FS**  字段分隔符（默认是任何空格）。
-[G]  **IGNORECASE**  如果为真，则进行忽略大小写的匹配。
-[A]  **NF**  表示字段数，在执行过程中对应于当前的字段数。
-[A]  **NR**  表示记录数，在执行过程中对应于当前的行号。
-[A]  **OFMT**  数字的输出格式（默认值是%.6g）。
-[A]  **OFS**  输出字段分隔符（默认值是一个空格）。
-[A]  **ORS**  输出记录分隔符（默认值是一个换行符）。
-[A]  **RS**  记录分隔符（默认是一个换行符）。
-[N]  **RSTART**  由match函数所匹配的字符串的第一个位置。
-[N]  **RLENGTH**  由match函数所匹配的字符串的长度。
-[N]  **SUBSEP**  数组下标分隔符（默认值是34）。
-```
-
- **示例** 
+說明：[A][N][P][G]表示第一個支援變數的工具，[A]=awk、[N]=nawk、[P]=POSIXawk、[G]=gawk
 
 ```
-echo -e "line1 f2 f3nline2 f4 f5nline3 f6 f7" | awk '{print "Line No:"NR", No of fields:"NF, "$0="$0, "$1="$1, "$2="$2, "$3="$3}' 
+ **$n**  當前記錄的第n個欄位，比如n為1表示第一個欄位，n為2表示第二個欄位。
+ **$0**  這個變數包含執行過程中當前行的文字內容。
+[N]  **ARGC**  命令列參數的數目。
+[G]  **ARGIND**  命令列中當前檔案的位置（從0開始算）。
+[N]  **ARGV**  包含命令列參數的陣列。
+[G]  **CONVFMT**  數字轉換格式（預設值為%.6g）。
+[P]  **ENVIRON**  環境變數關聯陣列。
+[N]  **ERRNO**  最後一個系統錯誤的描述。
+[G]  **FIELDWIDTHS**  欄位寬度列表（用空格鍵分隔）。
+[A]  **FILENAME**  當前輸入檔案的名。
+[P]  **FNR**  同NR，但相對於當前檔案。
+[A]  **FS**  欄位分隔符（預設是任何空格）。
+[G]  **IGNORECASE**  如果為真，則進行忽略大小寫的匹配。
+[A]  **NF**  表示欄位數，在執行過程中對應於當前的欄位數。
+[A]  **NR**  表示記錄數，在執行過程中對應於當前的行號。
+[A]  **OFMT**  數字的輸出格式（預設值是%.6g）。
+[A]  **OFS**  輸出欄位分隔符（預設值是一個空格）。
+[A]  **ORS**  輸出記錄分隔符（預設值是一個換行符）。
+[A]  **RS**  記錄分隔符（預設是一個換行符）。
+[N]  **RSTART**  由match函數所匹配的字元串的第一個位置。
+[N]  **RLENGTH**  由match函數所匹配的字元串的長度。
+[N]  **SUBSEP**  陣列下標分隔符（預設值是34）。
+```
+
+ **示例**
+
+```
+echo -e "line1 f2 f3nline2 f4 f5nline3 f6 f7" | awk '{print "Line No:"NR", No of fields:"NF, "$0="$0, "$1="$1, "$2="$2, "$3="$3}'
 Line No:1, No of fields:3 $0=line1 f2 f3 $1=line1 $2=f2 $3=f3
 Line No:2, No of fields:3 $0=line2 f4 f5 $1=line2 $2=f4 $3=f5
 Line No:3, No of fields:3 $0=line3 f6 f7 $1=line3 $2=f6 $3=f7
 ```
 
-使用`print $NF`可以打印出一行中的最后一个字段，使用`$(NF-1)`则是打印倒数第二个字段，其他以此类推：
+使用`print $NF`可以列印出一行中的最後一個欄位，使用`$(NF-1)`則是列印倒數第二個欄位，其他以此類推：
 
 ```
 echo -e "line1 f2 f3n line2 f4 f5" | awk '{print $NF}'
@@ -153,44 +153,44 @@ f4
 
 ```
 
-打印每一行的第二和第三个字段：
+列印每一行的第二和第三個欄位：
 
 ```
 awk '{ print $2,$3 }' filename
 ```
 
-统计文件中的行数：
+統計檔案中的行數：
 
 ```
 awk 'END{ print NR }' filename
 ```
 
-以上命令只使用了END语句块，在读入每一行的时，awk会将NR更新为对应的行号，当到达最后一行NR的值就是最后一行的行号，所以END语句块中的NR就是文件的行数。
+以上命令只使用了END語句塊，在讀入每一行的時，awk會將NR更新為對應的行號，當到達最後一行NR的值就是最後一行的行號，所以END語句塊中的NR就是檔案的行數。
 
-一个每一行中第一个字段值累加的例子：
+一個每一行中第一個欄位值累加的例子：
 
 ```
-seq 5 | awk 'BEGIN{ sum=0; print "总和：" } { print $1"+"; sum+=$1 } END{ print "等于"; print sum }' 
-总和：
+seq 5 | awk 'BEGIN{ sum=0; print "總和：" } { print $1"+"; sum+=$1 } END{ print "等於"; print sum }'
+總和：
 1+
 2+
 3+
 4+
 5+
-等于
+等於
 15
 ```
 
-## 将外部变量值传递给awk  
+## 將外部變數值傳遞給awk
 
-借助 **`-v`选项** ，可以将外部值（并非来自stdin）传递给awk：
+藉助 **`-v`選項** ，可以將外部值（並非來自stdin）傳遞給awk：
 
 ```
 VAR=10000
 echo | awk -v VARIABLE=$VAR '{ print VARIABLE }'
 ```
 
-另一种传递外部变量方法：
+另一種傳遞外部變數方法：
 
 ```
 var1="aaa"
@@ -198,27 +198,27 @@ var2="bbb"
 echo | awk '{ print v1,v2 }' v1=$var1 v2=$var2
 ```
 
-当输入来自于文件时使用：
+當輸入來自於檔案時使用：
 
 ```
 awk '{ print v1,v2 }' v1=$var1 v2=$var2 filename
 ```
 
-以上方法中，变量之间用空格分隔作为awk的命令行参数跟随在BEGIN、{}和END语句块之后。
+以上方法中，變數之間用空格分隔作為awk的命令列參數跟隨在BEGIN、{}和END語句塊之後。
 
-## awk运算与判断  
+## awk運算與判斷
 
-作为一种程序设计语言所应具有的特点之一，awk支持多种运算，这些运算与C语言提供的基本相同。awk还提供了一系列内置的运算函数（如log、sqr、cos、sin等）和一些用于对字符串进行操作（运算）的函数（如length、substr等等）。这些函数的引用大大的提高了awk的运算功能。作为对条件转移指令的一部分，关系判断是每种程序设计语言都具备的功能，awk也不例外，awk中允许进行多种测试，作为样式匹配，还提供了模式匹配表达式~（匹配）和~!（不匹配）。作为对测试的一种扩充，awk也支持用逻辑运算符。
+作為一種程式設計語言所應具有的特點之一，awk支援多種運算，這些運算與C語言提供的基本相同。awk還提供了一系列內建的運算函數（如log、sqr、cos、sin等）和一些用於對字元串進行操作（運算）的函數（如length、substr等等）。這些函數的引用大大的提高了awk的運算功能。作為對條件轉移指令的一部分，關係判斷是每種程式設計語言都具備的功能，awk也不例外，awk中允許進行多種測試，作為樣式匹配，還提供了模式匹配表示式~（匹配）和~!（不匹配）。作為對測試的一種擴充，awk也支援用邏輯運算符。
 
-### 算术运算符  
+### 算術運算符
 
-<table style="width: 500px;" summary="运算符">
+<table style="width: 500px;" summary="運算符">
 
 <thead>
 
 <tr>
 
-<th>运算符</th>
+<th>運算符</th>
 
 <th>描述</th>
 
@@ -232,7 +232,7 @@ awk '{ print v1,v2 }' v1=$var1 v2=$var2 filename
 
 <td>+ -</td>
 
-<td>加，减</td>
+<td>加，減</td>
 
 </tr>
 
@@ -240,7 +240,7 @@ awk '{ print v1,v2 }' v1=$var1 v2=$var2 filename
 
 <td>* / &</td>
 
-<td>乘，除与求余</td>
+<td>乘，除與求餘</td>
 
 </tr>
 
@@ -248,7 +248,7 @@ awk '{ print v1,v2 }' v1=$var1 v2=$var2 filename
 
 <td>+ - !</td>
 
-<td>一元加，减和逻辑非</td>
+<td>一元加，減和邏輯非</td>
 
 </tr>
 
@@ -256,7 +256,7 @@ awk '{ print v1,v2 }' v1=$var1 v2=$var2 filename
 
 <td>^ ***</td>
 
-<td>求幂</td>
+<td>求冪</td>
 
 </tr>
 
@@ -264,7 +264,7 @@ awk '{ print v1,v2 }' v1=$var1 v2=$var2 filename
 
 <td>++ --</td>
 
-<td>增加或减少，作为前缀或后缀</td>
+<td>增加或減少，作為字首或字尾</td>
 
 </tr>
 
@@ -279,17 +279,17 @@ awk 'BEGIN{a="b";print a++,++a;}'
 0 2
 ```
 
-注意：所有用作算术运算符进行操作，操作数自动转为数值，所有非数值都变为0
+注意：所有用作算術運算符進行操作，操作數自動轉為數值，所有非數值都變為0
 
-### 赋值运算符  
+### 賦值運算符
 
-<table style="width: 500px;" summary="运算符">
+<table style="width: 500px;" summary="運算符">
 
 <thead>
 
 <tr>
 
-<th>运算符</th>
+<th>運算符</th>
 
 <th>描述</th>
 
@@ -303,7 +303,7 @@ awk 'BEGIN{a="b";print a++,++a;}'
 
 <td>= += -= *= /= %= ^= **=</td>
 
-<td>赋值语句</td>
+<td>賦值語句</td>
 
 </tr>
 
@@ -314,18 +314,18 @@ awk 'BEGIN{a="b";print a++,++a;}'
 例：
 
 ```
-a+=5; 等价于：a=a+5; 其它同类
+a+=5; 等價於：a=a+5; 其它同類
 ```
 
-### 逻辑运算符  
+### 邏輯運算符
 
-<table style="width: 500px;" summary="运算符">
+<table style="width: 500px;" summary="運算符">
 
 <thead>
 
 <tr>
 
-<th>运算符</th>
+<th>運算符</th>
 
 <th>描述</th>
 
@@ -339,7 +339,7 @@ a+=5; 等价于：a=a+5; 其它同类
 
 <td>||</td>
 
-<td>逻辑或</td>
+<td>邏輯或</td>
 
 </tr>
 
@@ -347,7 +347,7 @@ a+=5; 等价于：a=a+5; 其它同类
 
 <td>&&</td>
 
-<td>逻辑与</td>
+<td>邏輯與</td>
 
 </tr>
 
@@ -362,15 +362,15 @@ awk 'BEGIN{a=1;b=2;print (a>5 && b<=2),(a>5 || b<=2);}'
 0 1
 ```
 
-### 正则运算符  
+### 正則運算符
 
-<table style="width: 500px;" summary="运算符">
+<table style="width: 500px;" summary="運算符">
 
 <thead>
 
 <tr>
 
-<th>运算符</th>
+<th>運算符</th>
 
 <th>描述</th>
 
@@ -384,7 +384,7 @@ awk 'BEGIN{a=1;b=2;print (a>5 && b<=2),(a>5 || b<=2);}'
 
 <td>~ ~!</td>
 
-<td>匹配正则表达式和不匹配正则表达式</td>
+<td>匹配正規表示式和不匹配正規表示式</td>
 
 </tr>
 
@@ -399,15 +399,15 @@ awk 'BEGIN{a="100testa";if(a ~ /^100*/){print "ok";}}'
 ok
 ```
 
-### 关系运算符  
+### 關係運算符
 
-<table style="width: 500px;" summary="运算符">
+<table style="width: 500px;" summary="運算符">
 
 <thead>
 
 <tr>
 
-<th>运算符</th>
+<th>運算符</th>
 
 <th>描述</th>
 
@@ -421,7 +421,7 @@ ok
 
 <td>< <= > >= != ==</td>
 
-<td>关系运算符</td>
+<td>關係運算符</td>
 
 </tr>
 
@@ -436,17 +436,17 @@ awk 'BEGIN{a=11;if(a >= 9){print "ok";}}'
 ok
 ```
 
-注意：> < 可以作为字符串比较，也可以用作数值比较，关键看操作数如果是字符串就会转换为字符串比较。两个都为数字才转为数值比较。字符串比较：按照ASCII码顺序比较。
+注意：> < 可以作為字元串比較，也可以用作數值比較，關鍵看操作數如果是字元串就會轉換為字元串比較。兩個都為數字才轉為數值比較。字元串比較：按照ASCII碼順序比較。
 
-### 其它运算符  
+### 其它運算符
 
-<table style="width: 500px;" summary="运算符">
+<table style="width: 500px;" summary="運算符">
 
 <thead>
 
 <tr>
 
-<th>运算符</th>
+<th>運算符</th>
 
 <th>描述</th>
 
@@ -460,7 +460,7 @@ ok
 
 <td>$</td>
 
-<td>字段引用</td>
+<td>欄位引用</td>
 
 </tr>
 
@@ -468,7 +468,7 @@ ok
 
 <td>空格</td>
 
-<td>字符串连接符</td>
+<td>字元串連線符</td>
 
 </tr>
 
@@ -476,7 +476,7 @@ ok
 
 <td>?:</td>
 
-<td>C条件表达式</td>
+<td>C條件表示式</td>
 
 </tr>
 
@@ -484,7 +484,7 @@ ok
 
 <td>in</td>
 
-<td>数组中是否存在某键值</td>
+<td>陣列中是否存在某鍵值</td>
 
 </tr>
 
@@ -509,16 +509,16 @@ awk 'BEGIN{a="b";arr[0]="b";arr["b"]="c";print (a in arr);}'
 1
 ```
 
-### 运算级优先级表  
+### 運算級優先順序表
 
-!级别越高越优先  
-级别越高越优先
+!級別越高越優先
+級別越高越優先
 
-## awk高级输入输出  
+## awk高階輸入輸出
 
-### 读取下一条记录  
+### 讀取下一條記錄
 
-awk中`next`语句使用：在循环逐行匹配，如果遇到next，就会跳过当前行，直接忽略下面语句。而进行下一行匹配。net语句一般用于多行合并：
+awk中`next`語句使用：在迴圈逐行匹配，如果遇到next，就會跳過當前行，直接忽略下面語句。而進行下一行匹配。net語句一般用於多行合併：
 
 ```
 cat text.txt
@@ -533,9 +533,9 @@ awk 'NR%2==1{next}{print NR,$0;}' text.txt
 4 d
 ```
 
-当记录行号除以2余1，就跳过当前行。下面的`print NR,$0`也不会执行。下一行开始，程序有开始判断`NR%2`值。这个时候记录行号是`：2` ，就会执行下面语句块：`'print NR,$0'`
+當記錄行號除以2餘1，就跳過當前行。下面的`print NR,$0`也不會執行。下一行開始，程式有開始判斷`NR%2`值。這個時候記錄行號是`：2` ，就會執行下面語句塊：`'print NR,$0'`
 
-分析发现需要将包含有“web”行进行跳过，然后需要将内容与下面行合并为一行：
+分析發現需要將包含有“web”行進行跳過，然後需要將內容與下面行合併為一行：
 
 ```
 cat text.txt
@@ -560,50 +560,50 @@ web03[192.168.2.102]:   mysqld            ok
 web03[192.168.2.102]:   httpd               ok
 ```
 
-### 简单地读取一条记录  
+### 簡單地讀取一條記錄
 
-`awk getline`用法：输出重定向需用到`getline函数`。getline从标准输入、管道或者当前正在处理的文件之外的其他输入文件获得输入。它负责从输入获得下一行的内容，并给NF,NR和FNR等内建变量赋值。如果得到一条记录，getline函数返回1，如果到达文件的末尾就返回0，如果出现错误，例如打开文件失败，就返回-1。
+`awk getline`用法：輸出重定向需用到`getline函數`。getline從標準輸入、管道或者當前正在處理的檔案之外的其他輸入檔案獲得輸入。它負責從輸入獲得下一行的內容，並給NF,NR和FNR等內建變數賦值。如果得到一條記錄，getline函數返回1，如果到達檔案的末尾就返回0，如果出現錯誤，例如開啟檔案失敗，就返回-1。
 
-getline语法：getline var，变量var包含了特定行的内容。
+getline語法：getline var，變數var包含了特定行的內容。
 
-awk getline从整体上来说，用法说明：
+awk getline從整體上來說，用法說明：
 
-*    **当其左右无重定向符`|`或`<`时：** getline作用于当前文件，读入当前文件的第一行给其后跟的变量`var`或`$0`（无变量），应该注意到，由于awk在处理getline之前已经读入了一行，所以getline得到的返回结果是隔行的。
-*    **当其左右有重定向符`|`或`<`时：** getline则作用于定向输入文件，由于该文件是刚打开，并没有被awk读入一行，只是getline读入，那么getline返回的是该文件的第一行，而不是隔行。
+*    **當其左右無重定向符`|`或`<`時：** getline作用於當前檔案，讀入當前檔案的第一行給其後跟的變數`var`或`$0`（無變數），應該注意到，由於awk在處理getline之前已經讀入了一行，所以getline得到的返回結果是隔行的。
+*    **當其左右有重定向符`|`或`<`時：** getline則作用於定向輸入檔案，由於該檔案是剛開啟，並沒有被awk讀入一行，只是getline讀入，那麼getline返回的是該檔案的第一行，而不是隔行。
 
- **示例：** 
+ **示例：**
 
-执行linux的`date`命令，并通过管道输出给`getline`，然后再把输出赋值给自定义变量out，并打印它：
+執行linux的`date`命令，並通過管道輸出給`getline`，然後再把輸出賦值給自定義變數out，並列印它：
 
 ```
 awk 'BEGIN{ "date" | getline out; print out }' test
 ```
 
-执行shell的date命令，并通过管道输出给getline，然后getline从管道中读取并将输入赋值给out，split函数把变量out转化成数组mon，然后打印数组mon的第二个元素：
+執行shell的date命令，並通過管道輸出給getline，然後getline從管道中讀取並將輸入賦值給out，split函數把變數out轉化成陣列mon，然後列印陣列mon的第二個元素：
 
 ```
 awk 'BEGIN{ "date" | getline out; split(out,mon); print mon[2] }' test
 ```
 
-命令ls的输出传递给geline作为输入，循环使getline从ls的输出中读取一行，并把它打印到屏幕。这里没有输入文件，因为BEGIN块在打开输入文件前执行，所以可以忽略输入文件。
+命令ls的輸出傳遞給geline作為輸入，迴圈使getline從ls的輸出中讀取一行，並把它列印到螢幕。這裡沒有輸入檔案，因為BEGIN塊在開啟輸入檔案前執行，所以可以忽略輸入檔案。
 
 ```
 awk 'BEGIN{ while( "ls" | getline) print }'
 ```
 
-### 关闭文件  
+### 關閉檔案
 
-awk中允许在程序中关闭一个输入或输出文件，方法是使用awk的close语句。
+awk中允許在程式中關閉一個輸入或輸出檔案，方法是使用awk的close語句。
 
 ```
 close("filename")
 ```
 
-filename可以是getline打开的文件，也可以是stdin，包含文件名的变量或者getline使用的确切命令。或一个输出文件，可以是stdout，包含文件名的变量或使用管道的确切命令。
+filename可以是getline開啟的檔案，也可以是stdin，包含檔名的變數或者getline使用的確切命令。或一個輸出檔案，可以是stdout，包含檔名的變數或使用管道的確切命令。
 
-### 输出到一个文件  
+### 輸出到一個檔案
 
-awk中允许用如下方式将结果输出到一个文件：
+awk中允許用如下方式將結果輸出到一個檔案：
 
 ```
 echo | awk '{printf("hello word!n") > "datafile"}'
@@ -611,9 +611,9 @@ echo | awk '{printf("hello word!n") > "datafile"}'
 echo | awk '{printf("hello word!n") >> "datafile"}'
 ```
 
-## 设置字段定界符  
+## 設定欄位定界符
 
-默认的字段定界符是空格，可以使用`-F "定界符"`  明确指定一个定界符：
+預設的欄位定界符是空格，可以使用`-F "定界符"`  明確指定一個定界符：
 
 ```
 awk -F: '{ print $NF }' /etc/passwd
@@ -621,30 +621,30 @@ awk -F: '{ print $NF }' /etc/passwd
 awk 'BEGIN{ FS=":" } { print $NF }' /etc/passwd
 ```
 
-在`BEGIN语句块`中则可以用`OFS=“定界符”`设置输出字段的定界符。
+在`BEGIN語句塊`中則可以用`OFS=“定界符”`設定輸出欄位的定界符。
 
-## 流程控制语句  
+## 流程控制語句
 
-在linux awk的while、do-while和for语句中允许使用break,continue语句来控制流程走向，也允许使用exit这样的语句来退出。break中断当前正在执行的循环并跳到循环外执行下一条语句。if 是流程选择用法。awk中，流程控制语句，语法结构，与c语言类型。有了这些语句，其实很多shell程序都可以交给awk，而且性能是非常快的。下面是各个语句用法。
+在linux awk的while、do-while和for語句中允許使用break,continue語句來控制流程走向，也允許使用exit這樣的語句來退出。break中斷當前正在執行的迴圈並跳到迴圈外執行下一條語句。if 是流程選擇用法。awk中，流程控制語句，語法結構，與c語言類型。有了這些語句，其實很多shell程式都可以交給awk，而且效能是非常快的。下面是各個語句用法。
 
-### 条件判断语句  
+### 條件判斷語句
 
 ```
-if(表达式)
-  语句1
+if(表示式)
+  語句1
 else
-  语句2
+  語句2
 ```
 
-格式中语句1可以是多个语句，为了方便判断和阅读，最好将多个语句用{}括起来。awk分枝结构允许嵌套，其格式为：
+格式中語句1可以是多個語句，為了方便判斷和閱讀，最好將多個語句用{}括起來。awk分枝結構允許巢狀，其格式為：
 
 ```
-if(表达式)
-  {语句1}
-else if(表达式)
-  {语句2}
+if(表示式)
+  {語句1}
+else if(表示式)
+  {語句2}
 else
-  {语句3}
+  {語句3}
 ```
 
 示例：
@@ -666,15 +666,15 @@ if(test>90){
 very good
 ```
 
-每条命令语句后面可以用`;` **分号** 结尾。
+每條命令語句後面可以用`;` **分號** 結尾。
 
-### 循环语句  
+### 迴圈語句
 
-#### while语句  
+#### while語句
 
 ```
-while(表达式)
-  {语句}
+while(表示式)
+  {語句}
 ```
 
 示例：
@@ -692,15 +692,15 @@ print total;
 5050
 ```
 
-#### for循环  
+#### for迴圈
 
-for循环有两种格式：
+for迴圈有兩種格式：
 
 格式1：
 
 ```
-for(变量 in 数组)
-  {语句}
+for(變數 in 陣列)
+  {語句}
 ```
 
 示例：
@@ -722,13 +722,13 @@ HOME=/root
 SSH_CLIENT=192.168.1.21 53087 22
 ```
 
-注：ENVIRON是awk常量，是子典型数组。
+注：ENVIRON是awk常量，是子典型陣列。
 
 格式2：
 
 ```
-for(变量;条件;表达式)
-  {语句}
+for(變數;條件;表示式)
+  {語句}
 ```
 
 示例：
@@ -744,17 +744,17 @@ print total;
 5050
 ```
 
-#### do循环  
+#### do迴圈
 
 ```
 do
-{语句} while(条件)
+{語句} while(條件)
 ```
 
 例子：
 
 ```
-awk 'BEGIN{ 
+awk 'BEGIN{
 total=0;
 i=0;
 do {total+=i;i++;} while(i<=100)
@@ -763,27 +763,27 @@ do {total+=i;i++;} while(i<=100)
 5050
 ```
 
-### 其他语句  
+### 其他語句
 
-*    **break**  当 break 语句用于 while 或 for 语句时，导致退出程序循环。
-*    **continue**  当 continue 语句用于 while 或 for 语句时，使程序循环移动到下一个迭代。
-*    **next**  能能够导致读入下一个输入行，并返回到脚本的顶部。这可以避免对当前输入行执行其他的操作过程。
-*    **exit**  语句使主输入循环退出并将控制转移到END,如果END存在的话。如果没有定义END规则，或在END中应用exit语句，则终止脚本的执行。
+*    **break**  當 break 語句用於 while 或 for 語句時，導致退出程式迴圈。
+*    **continue**  當 continue 語句用於 while 或 for 語句時，使程式迴圈移動到下一個迭代。
+*    **next**  能能夠導致讀入下一個輸入行，並返回到指令碼的頂部。這可以避免對當前輸入行執行其他的操作過程。
+*    **exit**  語句使主輸入迴圈退出並將控制轉移到END,如果END存在的話。如果沒有定義END規則，或在END中應用exit語句，則終止指令碼的執行。
 
-## 数组应用  
+## 陣列應用
 
-数组是awk的灵魂，处理文本中最不能少的就是它的数组处理。因为数组索引（下标）可以是数字和字符串在awk中数组叫做关联数组(associative arrays)。awk 中的数组不必提前声明，也不必声明大小。数组元素用0或空字符串来初始化，这根据上下文而定。
+陣列是awk的靈魂，處理文字中最不能少的就是它的陣列處理。因為陣列索引（下標）可以是數字和字元串在awk中陣列叫做關聯陣列(associative arrays)。awk 中的陣列不必提前聲明，也不必聲明大小。陣列元素用0或空字元串來初始化，這根據上下文而定。
 
-### 数组的定义  
+### 陣列的定義
 
-数字做数组索引（下标）：
+數字做陣列索引（下標）：
 
 ```
 Array[1]="sun"
 Array[2]="kai"
 ```
 
-字符串做数组索引（下标）：
+字元串做陣列索引（下標）：
 
 ```
 Array["first"]="www"
@@ -791,44 +791,44 @@ Array"[last"]="name"
 Array["birth"]="1987"
 ```
 
-使用中`print Array[1]`会打印出sun；使用`print Array[2]`会打印出kai；使用`print["birth"]`会得到1987。
+使用中`print Array[1]`會列印出sun；使用`print Array[2]`會列印出kai；使用`print["birth"]`會得到1987。
 
- **读取数组的值** 
+ **讀取陣列的值**
 
 ```
-{ for(item in array) {print array[item]}; }       #输出的顺序是随机的
-{ for(i=1;i<=len;i++) {print array[i]}; }         #Len是数组的长度
+{ for(item in array) {print array[item]}; }       #輸出的順序是隨機的
+{ for(i=1;i<=len;i++) {print array[i]}; }         #Len是陣列的長度
 ```
 
-### 数组相关函数  
+### 陣列相關函數
 
- **得到数组长度：** 
+ **得到陣列長度：**
 
 ```
 awk 'BEGIN{info="it is a test";lens=split(info,tA," ");print length(tA),lens;}'
 4 4
 ```
 
-length返回字符串以及数组长度，split进行分割字符串为数组，也会返回分割得到数组长度。
+length返回字元串以及陣列長度，split進行分割字元串為陣列，也會返回分割得到陣列長度。
 
 ```
 awk 'BEGIN{info="it is a test";split(info,tA," ");print asort(tA);}'
 4
 ```
 
-asort对数组进行排序，返回数组长度。
+asort對陣列進行排序，返回陣列長度。
 
- **输出数组内容（无序，有序输出）：** 
+ **輸出陣列內容（無序，有序輸出）：**
 
 ```
 awk 'BEGIN{info="it is a test";split(info,tA," ");for(k in tA){print k,tA[k];}}'
 4 test
 1 it
 2 is
-3 a 
+3 a
 ```
 
-`for…in`输出，因为数组是关联数组，默认是无序的。所以通过`for…in`得到是无序的数组。如果需要得到有序数组，需要通过下标获得。
+`for…in`輸出，因為陣列是關聯陣列，預設是無序的。所以通過`for…in`得到是無序的陣列。如果需要得到有序陣列，需要通過下標獲得。
 
 ```
 awk 'BEGIN{info="it is a test";tlen=split(info,tA," ");for(k=1;k<=tlen;k++){print k,tA[k];}}'
@@ -838,43 +838,43 @@ awk 'BEGIN{info="it is a test";tlen=split(info,tA," ");for(k=1;k<=tlen;k++){prin
 4 test
 ```
 
-注意：数组下标是从1开始，与C数组不一样。
+注意：陣列下標是從1開始，與C陣列不一樣。
 
- **判断键值存在以及删除键值：** 
+ **判斷鍵值存在以及刪除鍵值：**
 
 ```
-#错误的判断方法：
-awk 'BEGIN{tB["a"]="a1";tB["b"]="b1";if(tB["c"]!="1"){print "no found";};for(k in tB){print k,tB[k];}}' 
+#錯誤的判斷方法：
+awk 'BEGIN{tB["a"]="a1";tB["b"]="b1";if(tB["c"]!="1"){print "no found";};for(k in tB){print k,tB[k];}}'
 no found
 a a1
 b b1
 c
 ```
 
-以上出现奇怪问题，`tB[“c”]`没有定义，但是循环时候，发现已经存在该键值，它的值为空，这里需要注意，awk数组是关联数组，只要通过数组引用它的key，就会自动创建改序列。
+以上出現奇怪問題，`tB[“c”]`沒有定義，但是迴圈時候，發現已經存在該鍵值，它的值為空，這裡需要注意，awk陣列是關聯陣列，只要通過陣列引用它的key，就會自動建立改序列。
 
 ```
-#正确判断方法：
-awk 'BEGIN{tB["a"]="a1";tB["b"]="b1";if( "c" in tB){print "ok";};for(k in tB){print k,tB[k];}}'  
+#正確判斷方法：
+awk 'BEGIN{tB["a"]="a1";tB["b"]="b1";if( "c" in tB){print "ok";};for(k in tB){print k,tB[k];}}'
 a a1
 b b1
 ```
 
-`if(key in array)`通过这种方法判断数组中是否包含`key`键值。
+`if(key in array)`通過這種方法判斷陣列中是否包含`key`鍵值。
 
 ```
-#删除键值：
-[chengmo@localhost ~]$ awk 'BEGIN{tB["a"]="a1";tB["b"]="b1";delete tB["a"];for(k in tB){print k,tB[k];}}'                     
+#刪除鍵值：
+[chengmo@localhost ~]$ awk 'BEGIN{tB["a"]="a1";tB["b"]="b1";delete tB["a"];for(k in tB){print k,tB[k];}}'
 b b1
 ```
 
-`delete array[key]`可以删除，对应数组`key`的，序列值。
+`delete array[key]`可以刪除，對應陣列`key`的，序列值。
 
-### 二维、多维数组使用  
+### 二維、多維陣列使用
 
-awk的多维数组在本质上是一维数组，更确切一点，awk在存储上并不支持多维数组。awk提供了逻辑上模拟二维数组的访问方式。例如，`array[2,4]=1`这样的访问是允许的。awk使用一个特殊的字符串`SUBSEP(�34)`作为分割字段，在上面的例子中，关联数组array存储的键值实际上是2�344。
+awk的多維陣列在本質上是一維陣列，更確切一點，awk在儲存上並不支援多維陣列。awk提供了邏輯上模擬二維陣列的訪問方式。例如，`array[2,4]=1`這樣的訪問是允許的。awk使用一個特殊的字元串`SUBSEP(�34)`作為分割欄位，在上面的例子中，關聯陣列array儲存的鍵值實際上是2�344。
 
-类似一维数组的成员测试，多维数组可以使用`if ( (i,j) in array)`这样的语法，但是下标必须放置在圆括号中。类似一维数组的循环访问，多维数组使用`for ( item in array )`这样的语法遍历数组。与一维数组不同的是，多维数组必须使用`split()`函数来访问单独的下标分量。
+類似一維陣列的成員測試，多維陣列可以使用`if ( (i,j) in array)`這樣的語法，但是下標必須放置在圓括號中。類似一維陣列的迴圈訪問，多維陣列使用`for ( item in array )`這樣的語法遍歷陣列。與一維陣列不同的是，多維陣列必須使用`split()`函數來訪問單獨的下標分量。
 
 ```
 awk 'BEGIN{
@@ -889,7 +889,7 @@ for(i=1;i<=9;i++){
 1 * 3 = 3
 1 * 4 = 4
 1 * 5 = 5
-1 * 6 = 6 
+1 * 6 = 6
 ...
 9 * 6 = 54
 9 * 7 = 63
@@ -897,9 +897,9 @@ for(i=1;i<=9;i++){
 9 * 9 = 81
 ```
 
-可以通过`array[k,k2]`引用获得数组内容。
+可以通過`array[k,k2]`引用獲得陣列內容。
 
-另一种方法：
+另一種方法：
 
 ```
 awk 'BEGIN{
@@ -914,11 +914,11 @@ for(m in tarr){
 }'
 ```
 
-## 内置函数  
+## 內建函數
 
-awk内置函数，主要分以下3种类似：算数函数、字符串函数、其它一般函数、时间函数。
+awk內建函數，主要分以下3種類似：算數函數、字元串函數、其它一般函數、時間函數。
 
-### 算术函数  
+### 算術函數
 
 <table height="241" width="907">
 
@@ -948,7 +948,7 @@ awk内置函数，主要分以下3种类似：算数函数、字符串函数、�
 
 <td>cos( x )</td>
 
-<td>返回 x 的余弦；x 是弧度。</td>
+<td>返回 x 的餘弦；x 是弧度。</td>
 
 </tr>
 
@@ -964,7 +964,7 @@ awk内置函数，主要分以下3种类似：算数函数、字符串函数、�
 
 <td>exp( x )</td>
 
-<td>返回 x 幂函数。</td>
+<td>返回 x 冪函數。</td>
 
 </tr>
 
@@ -972,7 +972,7 @@ awk内置函数，主要分以下3种类似：算数函数、字符串函数、�
 
 <td>log( x )</td>
 
-<td>返回 x 的自然对数。</td>
+<td>返回 x 的自然對數。</td>
 
 </tr>
 
@@ -988,7 +988,7 @@ awk内置函数，主要分以下3种类似：算数函数、字符串函数、�
 
 <td>int( x )</td>
 
-<td>返回 x 的截断至整数的值。</td>
+<td>返回 x 的截斷至整數的值。</td>
 
 </tr>
 
@@ -996,7 +996,7 @@ awk内置函数，主要分以下3种类似：算数函数、字符串函数、�
 
 <td>rand( )</td>
 
-<td>返回任意数字 n，其中 0 <= n < 1。</td>
+<td>返回任意數字 n，其中 0 <= n < 1。</td>
 
 </tr>
 
@@ -1004,7 +1004,7 @@ awk内置函数，主要分以下3种类似：算数函数、字符串函数、�
 
 <td>srand( [expr] )</td>
 
-<td>将 rand 函数的种子值设置为 Expr 参数的值，或如果省略 Expr 参数则使用某天的时间。返回先前的种子值。</td>
+<td>將 rand 函數的種子值設定為 Expr 參數的值，或如果省略 Expr 參數則使用某天的時間。返回先前的種子值。</td>
 
 </tr>
 
@@ -1012,7 +1012,7 @@ awk内置函数，主要分以下3种类似：算数函数、字符串函数、�
 
 </table>
 
-举例说明：
+舉例說明：
 
 ```
 awk 'BEGIN{OFMT="%.3f";fs=sin(1);fe=exp(10);fl=log(10);fi=int(3.1415);print fs,fe,fl,fi;}'
@@ -1020,9 +1020,9 @@ awk 'BEGIN{OFMT="%.3f";fs=sin(1);fe=exp(10);fl=log(10);fi=int(3.1415);print fs,f
 
 ```
 
-OFMT 设置输出数据格式是保留3位小数。
+OFMT 設定輸出資料格式是保留3位小數。
 
-获得随机数：
+獲得隨機數：
 
 ```
 awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
@@ -1030,10 +1030,10 @@ awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
 awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
 31
 awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
-41 
+41
 ```
 
-### 字符串函数  
+### 字元串函數
 
 <table width="100%">
 
@@ -1055,7 +1055,7 @@ awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
 
 <td>gsub( Ere, Repl, [ In ] )</td>
 
-<td>除了正则表达式所有具体值被替代这点，它和 sub 函数完全一样地执行。</td>
+<td>除了正規表示式所有具體值被替代這點，它和 sub 函數完全一樣地執行。</td>
 
 </tr>
 
@@ -1063,7 +1063,7 @@ awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
 
 <td>sub( Ere, Repl, [ In ] )</td>
 
-<td>用 Repl 参数指定的字符串替换 In 参数指定的字符串中的由 Ere 参数指定的扩展正则表达式的第一个具体值。sub 函数返回替换的数量。出现在 Repl 参数指定的字符串中的 &（和符号）由 In 参数指定的与 Ere 参数的指定的扩展正则表达式匹配的字符串替换。如果未指定 In 参数，缺省值是整个记录（$0 记录变量）。</td>
+<td>用 Repl 參數指定的字元串替換 In 參數指定的字元串中的由 Ere 參數指定的擴充套件正規表示式的第一個具體值。sub 函數返回替換的數量。出現在 Repl 參數指定的字元串中的 &（和符號）由 In 參數指定的與 Ere 參數的指定的擴充套件正規表示式匹配的字元串替換。如果未指定 In 參數，預設值是整個記錄（$0 記錄變數）。</td>
 
 </tr>
 
@@ -1071,7 +1071,7 @@ awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
 
 <td>index( String1, String2 )</td>
 
-<td>在由 String1 参数指定的字符串（其中有出现 String2 指定的参数）中，返回位置，从 1 开始编号。如果 String2 参数不在 String1 参数中出现，则返回 0（零）。</td>
+<td>在由 String1 參數指定的字元串（其中有出現 String2 指定的參數）中，返回位置，從 1 開始編號。如果 String2 參數不在 String1 參數中出現，則返回 0（零）。</td>
 
 </tr>
 
@@ -1079,7 +1079,7 @@ awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
 
 <td>length [(String)]</td>
 
-<td>返回 String 参数指定的字符串的长度（字符形式）。如果未给出 String 参数，则返回整个记录的长度（$0 记录变量）。</td>
+<td>返回 String 參數指定的字元串的長度（字元形式）。如果未給出 String 參數，則返回整個記錄的長度（$0 記錄變數）。</td>
 
 </tr>
 
@@ -1087,7 +1087,7 @@ awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
 
 <td>blength [(String)]</td>
 
-<td>返回 String 参数指定的字符串的长度（以字节为单位）。如果未给出 String 参数，则返回整个记录的长度（$0 记录变量）。</td>
+<td>返回 String 參數指定的字元串的長度（以位元組為單位）。如果未給出 String 參數，則返回整個記錄的長度（$0 記錄變數）。</td>
 
 </tr>
 
@@ -1095,7 +1095,7 @@ awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
 
 <td>substr( String, M, [ N ] )</td>
 
-<td>返回具有 N 参数指定的字符数量子串。子串从 String 参数指定的字符串取得，其字符以 M 参数指定的位置开始。M 参数指定为将 String 参数中的第一个字符作为编号 1。如果未指定 N 参数，则子串的长度将是 M 参数指定的位置到 String 参数的末尾 的长度。</td>
+<td>返回具有 N 參數指定的字元數量子串。子串從 String 參數指定的字元串取得，其字元以 M 參數指定的位置開始。M 參數指定為將 String 參數中的第一個字元作為編號 1。如果未指定 N 參數，則子串的長度將是 M 參數指定的位置到 String 參數的末尾 的長度。</td>
 
 </tr>
 
@@ -1103,7 +1103,7 @@ awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
 
 <td>match( String, Ere )</td>
 
-<td>在 String 参数指定的字符串（Ere 参数指定的扩展正则表达式出现在其中）中返回位置（字符形式），从 1 开始编号，或如果 Ere 参数不出现，则返回 0（零）。RSTART 特殊变量设置为返回值。RLENGTH 特殊变量设置为匹配的字符串的长度，或如果未找到任何匹配，则设置为 -1（负一）。</td>
+<td>在 String 參數指定的字元串（Ere 參數指定的擴充套件正規表示式出現在其中）中返回位置（字元形式），從 1 開始編號，或如果 Ere 參數不出現，則返回 0（零）。RSTART 特殊變數設定為返回值。RLENGTH 特殊變數設定為匹配的字元串的長度，或如果未找到任何匹配，則設定為 -1（負一）。</td>
 
 </tr>
 
@@ -1111,7 +1111,7 @@ awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
 
 <td>split( String, A, [Ere] )</td>
 
-<td>将 String 参数指定的参数分割为数组元素 A[1], A[2], . . ., A[n]，并返回 n 变量的值。此分隔可以通过 Ere 参数指定的扩展正则表达式进行，或用当前字段分隔符（FS 特殊变量）来进行（如果没有给出 Ere 参数）。除非上下文指明特定的元素还应具有一个数字值，否则 A 数组中的元素用字符串值来创建。</td>
+<td>將 String 參數指定的參數分割為陣列元素 A[1], A[2], . . ., A[n]，並返回 n 變數的值。此分隔可以通過 Ere 參數指定的擴充套件正規表示式進行，或用當前欄位分隔符（FS 特殊變數）來進行（如果沒有給出 Ere 參數）。除非上下文指明特定的元素還應具有一個數字值，否則 A 陣列中的元素用字元串值來建立。</td>
 
 </tr>
 
@@ -1119,7 +1119,7 @@ awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
 
 <td>tolower( String )</td>
 
-<td>返回 String 参数指定的字符串，字符串中每个大写字符将更改为小写。大写和小写的映射由当前语言环境的 LC_CTYPE 范畴定义。</td>
+<td>返回 String 參數指定的字元串，字元串中每個大寫字元將更改為小寫。大寫和小寫的對映由當前語言環境的 LC_CTYPE 範疇定義。</td>
 
 </tr>
 
@@ -1127,7 +1127,7 @@ awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
 
 <td>toupper( String )</td>
 
-<td>返回 String 参数指定的字符串，字符串中每个小写字符将更改为大写。大写和小写的映射由当前语言环境的 LC_CTYPE 范畴定义。</td>
+<td>返回 String 參數指定的字元串，字元串中每個小寫字元將更改為大寫。大寫和小寫的對映由當前語言環境的 LC_CTYPE 範疇定義。</td>
 
 </tr>
 
@@ -1135,7 +1135,7 @@ awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
 
 <td>sprintf(Format, Expr, Expr, . . . )</td>
 
-<td>根据 Format 参数指定的 printf 子例程格式字符串来格式化 Expr 参数指定的表达式并返回最后生成的字符串。</td>
+<td>根據 Format 參數指定的 printf 子例程格式字元串來格式化 Expr 參數指定的表示式並返回最後生成的字元串。</td>
 
 </tr>
 
@@ -1143,18 +1143,18 @@ awk 'BEGIN{srand();fr=int(100*rand());print fr;}'
 
 </table>
 
-注：Ere都可以是正则表达式。
+注：Ere都可以是正規表示式。
 
- **gsub,sub使用** 
+ **gsub,sub使用**
 
 ```
 awk 'BEGIN{info="this is a test2010test!";gsub(/[0-9]+/,"!",info);print info}'
 this is a test!test!
 ```
 
-在 info中查找满足正则表达式，`/[0-9]+/` 用`””`替换，并且替换后的值，赋值给info 未给info值，默认是`$0`
+在 info中查詢滿足正規表示式，`/[0-9]+/` 用`””`替換，並且替換後的值，賦值給info 未給info值，預設是`$0`
 
- **查找字符串（index使用）** 
+ **查詢字元串（index使用）**
 
 ```
 awk 'BEGIN{info="this is a test2010test!";print index(info,"test")?"ok":"no found";}'
@@ -1163,23 +1163,23 @@ ok
 
 未找到，返回0
 
- **正则表达式匹配查找(match使用）** 
+ **正規表示式匹配查詢(match使用）**
 
 ```
 awk 'BEGIN{info="this is a test2010test!";print match(info,/[0-9]+/)?"ok":"no found";}'
 ok
 ```
 
- **截取字符串(substr使用）** 
+ **擷取字元串(substr使用）**
 
 ```
 [wangsl@centos5 ~]$ awk 'BEGIN{info="this is a test2010test!";print substr(info,4,10);}'
 s is a tes
 ```
 
-从第 4个 字符开始，截取10个长度字符串
+從第 4個 字元開始，擷取10個長度字元串
 
- **字符串分割（split使用）** 
+ **字元串分割（split使用）**
 
 ```
 awk 'BEGIN{info="this is a test";split(info,tA," ");print length(tA);for(k in tA){print k,tA[k];}}'
@@ -1190,13 +1190,13 @@ awk 'BEGIN{info="this is a test";split(info,tA," ");print length(tA);for(k in tA
 3 a
 ```
 
-分割info，动态创建数组tA，这里比较有意思，`awk for …in`循环，是一个无序的循环。 并不是从数组下标1…n ，因此使用时候需要注意。
+分割info，動態建立陣列tA，這裡比較有意思，`awk for …in`迴圈，是一個無序的迴圈。 並不是從陣列下標1…n ，因此使用時候需要注意。
 
- **格式化字符串输出（sprintf使用）** 
+ **格式化字元串輸出（sprintf使用）**
 
-格式化字符串格式：
+格式化字元串格式：
 
-其中格式化字符串包括两部分内容：一部分是正常字符，这些字符将按原样输出; 另一部分是格式化规定字符，以`"%"`开始，后跟一个或几个规定字符,用来确定输出内容格式。
+其中格式化字元串包括兩部分內容：一部分是正常字元，這些字元將按原樣輸出; 另一部分是格式化規定字元，以`"%"`開始，後跟一個或幾個規定字元,用來確定輸出內容格式。
 
 <table width="100%">
 
@@ -1218,7 +1218,7 @@ awk 'BEGIN{info="this is a test";split(info,tA," ");print length(tA);for(k in tA
 
 <td>%d</td>
 
-<td>十进制有符号整数</td>
+<td>十進位制有符號整數</td>
 
 </tr>
 
@@ -1226,7 +1226,7 @@ awk 'BEGIN{info="this is a test";split(info,tA," ");print length(tA);for(k in tA
 
 <td>%u</td>
 
-<td>十进制无符号整数</td>
+<td>十進位制無符號整數</td>
 
 </tr>
 
@@ -1234,7 +1234,7 @@ awk 'BEGIN{info="this is a test";split(info,tA," ");print length(tA);for(k in tA
 
 <td>%f</td>
 
-<td>浮点数</td>
+<td>浮點數</td>
 
 </tr>
 
@@ -1242,7 +1242,7 @@ awk 'BEGIN{info="this is a test";split(info,tA," ");print length(tA);for(k in tA
 
 <td>%s</td>
 
-<td>字符串</td>
+<td>字元串</td>
 
 </tr>
 
@@ -1250,7 +1250,7 @@ awk 'BEGIN{info="this is a test";split(info,tA," ");print length(tA);for(k in tA
 
 <td>%c</td>
 
-<td>单个字符</td>
+<td>單個字元</td>
 
 </tr>
 
@@ -1258,7 +1258,7 @@ awk 'BEGIN{info="this is a test";split(info,tA," ");print length(tA);for(k in tA
 
 <td>%p</td>
 
-<td>指针的值</td>
+<td>指針的值</td>
 
 </tr>
 
@@ -1266,7 +1266,7 @@ awk 'BEGIN{info="this is a test";split(info,tA," ");print length(tA);for(k in tA
 
 <td>%e</td>
 
-<td>指数形式的浮点数</td>
+<td>指數形式的浮點數</td>
 
 </tr>
 
@@ -1274,7 +1274,7 @@ awk 'BEGIN{info="this is a test";split(info,tA," ");print length(tA);for(k in tA
 
 <td>%x</td>
 
-<td>%X 无符号以十六进制表示的整数</td>
+<td>%X 無符號以十六進位制表示的整數</td>
 
 </tr>
 
@@ -1282,7 +1282,7 @@ awk 'BEGIN{info="this is a test";split(info,tA," ");print length(tA);for(k in tA
 
 <td>%o</td>
 
-<td>无符号以八进制表示的整数</td>
+<td>無符號以八進位制表示的整數</td>
 
 </tr>
 
@@ -1290,7 +1290,7 @@ awk 'BEGIN{info="this is a test";split(info,tA," ");print length(tA);for(k in tA
 
 <td>%g</td>
 
-<td>自动选择合适的表示法</td>
+<td>自動選擇合適的表示法</td>
 
 </tr>
 
@@ -1303,7 +1303,7 @@ awk 'BEGIN{n1=124.113;n2=-1.224;n3=1.2345; printf("%.2f,%.2u,%.2g,%X,%on",n1,n2,
 124.11,18446744073709551615,1.2,7C,174
 ```
 
-### 一般函数  
+### 一般函數
 
 <table width="100%">
 
@@ -1325,7 +1325,7 @@ awk 'BEGIN{n1=124.113;n2=-1.224;n3=1.2345; printf("%.2f,%.2u,%.2g,%X,%on",n1,n2,
 
 <td>close( Expression )</td>
 
-<td>用同一个带字符串值的 Expression 参数来关闭由 print 或 printf 语句打开的或调用 getline 函数打开的文件或管道。如果文件或管道成功关闭，则返回 0；其它情况下返回非零值。如果打算写一个文件，并稍后在同一个程序中读取文件，则 close 语句是必需的。</td>
+<td>用同一個帶字元串值的 Expression 參數來關閉由 print 或 printf 語句開啟的或呼叫 getline 函數開啟的檔案或管道。如果檔案或管道成功關閉，則返回 0；其它情況下返回非零值。如果打算寫一個檔案，並稍後在同一個程式中讀取檔案，則 close 語句是必需的。</td>
 
 </tr>
 
@@ -1333,7 +1333,7 @@ awk 'BEGIN{n1=124.113;n2=-1.224;n3=1.2345; printf("%.2f,%.2u,%.2g,%X,%on",n1,n2,
 
 <td>system(command )</td>
 
-<td>执行 Command 参数指定的命令，并返回退出状态。等同于 system 子例程。</td>
+<td>執行 Command 參數指定的命令，並返回退出狀態。等同於 system 子例程。</td>
 
 </tr>
 
@@ -1341,7 +1341,7 @@ awk 'BEGIN{n1=124.113;n2=-1.224;n3=1.2345; printf("%.2f,%.2u,%.2g,%X,%on",n1,n2,
 
 <td>Expression | getline [ Variable ]</td>
 
-<td>从来自 Expression 参数指定的命令的输出中通过管道传送的流中读取一个输入记录，并将该记录的值指定给 Variable 参数指定的变量。如果当前未打开将 Expression 参数的值作为其命令名称的流，则创建流。创建的流等同于调用 popen 子例程，此时 Command 参数取 Expression 参数的值且 Mode 参数设置为一个是 r 的值。只要流保留打开且 Expression 参数求得同一个字符串，则对 getline 函数的每次后续调用读取另一个记录。如果未指定 Variable 参数，则 $0 记录变量和 NF 特殊变量设置为从流读取的记录。</td>
+<td>從來自 Expression 參數指定的命令的輸出中通過管道傳送的流中讀取一個輸入記錄，並將該記錄的值指定給 Variable 參數指定的變數。如果當前未開啟將 Expression 參數的值作為其命令名稱的流，則建立流。建立的流等同於呼叫 popen 子例程，此時 Command 參數取 Expression 參數的值且 Mode 參數設定為一個是 r 的值。只要流保留開啟且 Expression 參數求得同一個字元串，則對 getline 函數的每次後續呼叫讀取另一個記錄。如果未指定 Variable 參數，則 $0 記錄變數和 NF 特殊變數設定為從流讀取的記錄。</td>
 
 </tr>
 
@@ -1349,7 +1349,7 @@ awk 'BEGIN{n1=124.113;n2=-1.224;n3=1.2345; printf("%.2f,%.2u,%.2g,%X,%on",n1,n2,
 
 <td>getline [ Variable ] < Expression</td>
 
-<td>从 Expression 参数指定的文件读取输入的下一个记录，并将 Variable 参数指定的变量设置为该记录的值。只要流保留打开且 Expression 参数对同一个字符串求值，则对 getline 函数的每次后续调用读取另一个记录。如果未指定 Variable 参数，则 $0 记录变量和 NF 特殊变量设置为从流读取的记录。</td>
+<td>從 Expression 參數指定的檔案讀取輸入的下一個記錄，並將 Variable 參數指定的變數設定為該記錄的值。只要流保留開啟且 Expression 參數對同一個字元串求值，則對 getline 函數的每次後續呼叫讀取另一個記錄。如果未指定 Variable 參數，則 $0 記錄變數和 NF 特殊變數設定為從流讀取的記錄。</td>
 
 </tr>
 
@@ -1357,7 +1357,7 @@ awk 'BEGIN{n1=124.113;n2=-1.224;n3=1.2345; printf("%.2f,%.2u,%.2g,%X,%on",n1,n2,
 
 <td>getline [ Variable ]</td>
 
-<td>将 Variable 参数指定的变量设置为从当前输入文件读取的下一个输入记录。如果未指定 Variable 参数，则 $0 记录变量设置为该记录的值，还将设置 NF、NR 和 FNR 特殊变量。</td>
+<td>將 Variable 參數指定的變數設定為從當前輸入檔案讀取的下一個輸入記錄。如果未指定 Variable 參數，則 $0 記錄變數設定為該記錄的值，還將設定 NF、NR 和 FNR 特殊變數。</td>
 
 </tr>
 
@@ -1365,7 +1365,7 @@ awk 'BEGIN{n1=124.113;n2=-1.224;n3=1.2345; printf("%.2f,%.2u,%.2g,%X,%on",n1,n2,
 
 </table>
 
- **打开外部文件（close用法）** 
+ **開啟外部檔案（close用法）**
 
 ```
 awk 'BEGIN{while("cat /etc/passwd"|getline){print $0;};close("/etc/passwd");}'
@@ -1374,7 +1374,7 @@ bin:x:1:1:bin:/bin:/sbin/nologin
 daemon:x:2:2:daemon:/sbin:/sbin/nologin
 ```
 
- **逐行读取外部文件(getline使用方法）** 
+ **逐行讀取外部檔案(getline使用方法）**
 
 ```
 awk 'BEGIN{while(getline < "/etc/passwd"){print $0;};close("/etc/passwd");}'
@@ -1390,7 +1390,7 @@ chengmo
 chengmo
 ```
 
- **调用外部应用程序(system使用方法）** 
+ **呼叫外部應用程式(system使用方法）**
 
 ```
 awk 'BEGIN{b=system("ls -al");print b;}'
@@ -1399,9 +1399,9 @@ drwxr-xr-x 14 chengmo chengmo     4096 09-30 17:47 .
 drwxr-xr-x 95 root   root       4096 10-08 14:01 ..
 ```
 
-b返回值，是执行结果。
+b返回值，是執行結果。
 
-### 时间函数  
+### 時間函數
 
 <table width="100%">
 
@@ -1421,9 +1421,9 @@ b返回值，是执行结果。
 
 <tr>
 
-<td>函数名</td>
+<td>函數名</td>
 
-<td>说明</td>
+<td>說明</td>
 
 </tr>
 
@@ -1431,7 +1431,7 @@ b返回值，是执行结果。
 
 <td>mktime( YYYY MM dd HH MM ss[ DST])</td>
 
-<td>生成时间格式</td>
+<td>生成時間格式</td>
 
 </tr>
 
@@ -1439,8 +1439,8 @@ b返回值，是执行结果。
 
 <td>strftime([format [, timestamp]])</td>
 
-<td>格式化时间输出，将时间戳转为时间字符串  
-具体格式，见下表.</td>
+<td>格式化時間輸出，將時間戳轉為時間字元串
+具體格式，見下表.</td>
 
 </tr>
 
@@ -1448,7 +1448,7 @@ b返回值，是执行结果。
 
 <td>systime()</td>
 
-<td>得到时间戳,返回从1970年1月1日开始到当前时间(不计闰年)的整秒数</td>
+<td>得到時間戳,返回從1970年1月1日開始到當前時間(不計閏年)的整秒數</td>
 
 </tr>
 
@@ -1456,11 +1456,11 @@ b返回值，是执行结果。
 
 </table>
 
- **建指定时间(mktime使用）** 
+ **建指定時間(mktime使用）**
 
 ```
 awk 'BEGIN{tstamp=mktime("2001 01 01 12 12 12");print strftime("%c",tstamp);}'
-2001年01月01日 星期一 12时12分12秒
+2001年01月01日 星期一 12時12分12秒
 ```
 
 ```
@@ -1468,14 +1468,14 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=mktime("2001 02 01 0 0 
 2634468
 ```
 
-求2个时间段中间时间差，介绍了strftime使用方法
+求2個時間段中間時間差，介紹了strftime使用方法
 
 ```
-awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2-tstamp1;}' 
+awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2-tstamp1;}'
 308201392
 ```
 
- **strftime日期和时间格式说明符** 
+ **strftime日期和時間格式說明符**
 
 <table width="100%">
 
@@ -1497,7 +1497,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%a</td>
 
-<td>星期几的缩写(Sun)</td>
+<td>星期幾的縮寫(Sun)</td>
 
 </tr>
 
@@ -1505,7 +1505,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%A</td>
 
-<td>星期几的完整写法(Sunday)</td>
+<td>星期幾的完整寫法(Sunday)</td>
 
 </tr>
 
@@ -1513,7 +1513,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%b</td>
 
-<td>月名的缩写(Oct)</td>
+<td>月名的縮寫(Oct)</td>
 
 </tr>
 
@@ -1521,7 +1521,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%B</td>
 
-<td>月名的完整写法(October)</td>
+<td>月名的完整寫法(October)</td>
 
 </tr>
 
@@ -1529,7 +1529,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%c</td>
 
-<td>本地日期和时间</td>
+<td>本地日期和時間</td>
 
 </tr>
 
@@ -1537,7 +1537,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%d</td>
 
-<td>十进制日期</td>
+<td>十進位制日期</td>
 
 </tr>
 
@@ -1553,7 +1553,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%e</td>
 
-<td>日期，如果只有一位会补上一个空格</td>
+<td>日期，如果只有一位會補上一個空格</td>
 
 </tr>
 
@@ -1561,7 +1561,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%H</td>
 
-<td>用十进制表示24小时格式的小时</td>
+<td>用十進位制表示24小時格式的小時</td>
 
 </tr>
 
@@ -1569,7 +1569,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%I</td>
 
-<td>用十进制表示12小时格式的小时</td>
+<td>用十進位制表示12小時格式的小時</td>
 
 </tr>
 
@@ -1577,7 +1577,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%j</td>
 
-<td>从1月1日起一年中的第几天</td>
+<td>從1月1日起一年中的第幾天</td>
 
 </tr>
 
@@ -1585,7 +1585,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%m</td>
 
-<td>十进制表示的月份</td>
+<td>十進位制表示的月份</td>
 
 </tr>
 
@@ -1593,7 +1593,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%M</td>
 
-<td>十进制表示的分钟</td>
+<td>十進位制表示的分鐘</td>
 
 </tr>
 
@@ -1601,7 +1601,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%p</td>
 
-<td>12小时表示法(AM/PM)</td>
+<td>12小時表示法(AM/PM)</td>
 
 </tr>
 
@@ -1609,7 +1609,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%S</td>
 
-<td>十进制表示的秒</td>
+<td>十進位制表示的秒</td>
 
 </tr>
 
@@ -1617,7 +1617,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%U</td>
 
-<td>十进制表示的一年中的第几个星期(星期天作为一个星期的开始)</td>
+<td>十進位制表示的一年中的第幾個星期(星期天作為一個星期的開始)</td>
 
 </tr>
 
@@ -1625,7 +1625,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%w</td>
 
-<td>十进制表示的星期几(星期天是0)</td>
+<td>十進位制表示的星期幾(星期天是0)</td>
 
 </tr>
 
@@ -1633,7 +1633,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%W</td>
 
-<td>十进制表示的一年中的第几个星期(星期一作为一个星期的开始)</td>
+<td>十進位制表示的一年中的第幾個星期(星期一作為一個星期的開始)</td>
 
 </tr>
 
@@ -1641,7 +1641,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%x</td>
 
-<td>重新设置本地日期(08/20/99)</td>
+<td>重新設定本地日期(08/20/99)</td>
 
 </tr>
 
@@ -1649,7 +1649,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%X</td>
 
-<td>重新设置本地时间(12：00：00)</td>
+<td>重新設定本地時間(12：00：00)</td>
 
 </tr>
 
@@ -1657,7 +1657,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%y</td>
 
-<td>两位数字表示的年(99)</td>
+<td>兩位數字表示的年(99)</td>
 
 </tr>
 
@@ -1665,7 +1665,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%Y</td>
 
-<td>当前月份</td>
+<td>當前月份</td>
 
 </tr>
 
@@ -1673,7 +1673,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%Z</td>
 
-<td>时区(PDT)</td>
+<td>時區(PDT)</td>
 
 </tr>
 
@@ -1681,7 +1681,7 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 
 <td>%%</td>
 
-<td>百分号(%)</td>
+<td>百分號(%)</td>
 
 </tr>
 
@@ -1690,4 +1690,4 @@ awk 'BEGIN{tstamp1=mktime("2001 01 01 12 12 12");tstamp2=systime();print tstamp2
 </table>
 
 
-<!-- Linux命令行搜索引擎：https://jaywcjlove.github.io/linux-command/ -->
+<!-- Linux命令列搜尋引擎：https://jaywcjlove.github.io/linux-command/ -->
